@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   root :to => 'links#index'
-  resources :links
+  resources :links, :except => [:show]
   resources :comments
 
 end

@@ -29,7 +29,7 @@ class LinksController < ApplicationController
     @link = Link.find(params[:id])
     if @link.update(link_params)
       flash[:notice] = "Link updated."
-      redirect_to link_path(@link)
+      redirect_to links_path
     else
       render 'edit'
     end
