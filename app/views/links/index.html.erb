@@ -2,11 +2,18 @@
 
 <ul>
   <% @links.each do |link| %>
+    <br>
     <li><%= "#{link.link} - #{link.vote} - #{link.date}" %>
-     <%= link_to "Add Comment", new_comment_path, :class=> "btn btn-default btn-sm" %>
-      <%= link_to "Edit",edit_link_path(link), :class=> "btn btn-default btn-sm" %>
-       <%= link_to "Delete", link_path(link), :data => {:confirm => "You sure?",
-        :method => "delete"}, :class => "btn btn-danger" %></li>
+        <%= link_to "Add Comment", new_comment_path(:link_id => link.id) %>
+        <%= link_to "Edit",edit_link_path(link) %>
+        <%= link_to "Delete", link_path(link), :data => {:confirm => "You sure?",
+        :method => "delete"} %>
+    </li>
+    <ul>
+    <% link.comments.each do |comment| %>
+      <li><%= "#{comment.comment}"%> </li>
+    <% end %>
+    </ul>
   <% end %>
 </ul>
 

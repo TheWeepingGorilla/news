@@ -5,13 +5,16 @@ class CommentsController < ApplicationController
 
   def new
     @comment = Comment.new
+    @link = Link.find(params[:link_id])
   end
 
   def create
-    @comment = Comment.new(params[:comment])
+    @comment = Comment.new(comment_params)
+    link = Link.find(params[:comment][:commentable_id])
     if @comment.save
+      link.comments << @comment
       flash[:notice] = "Comment created."
-      redirect_to comments_path
+      redirect_to links_path
     else
       render 'new'
     end
@@ -26,7 +29,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment = Comment.find(params[:id])
+    @comment = Comment.find(comment_params)
     if @comment.update(params[:comment])
       flash[:notice] = "Comment updated."
       redirect_to comment_path(@comment)
@@ -44,6 +47,6 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.require(:comment).permit(:comment)
+    params.require(:comment).permit(:comment, :commentable_id, :commentable_type, :link_id)
   end
 end
