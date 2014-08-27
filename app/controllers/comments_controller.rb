@@ -32,7 +32,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(comment_params)
     if @comment.update(params[:comment])
       flash[:notice] = "Comment updated."
-      redirect_to comment_path(@comment)
+      redirect_to links_path
     else
       render 'edit'
     end
@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.destroy
     flash[:notice] = "Comment deleted."
-    redirect_to comments_path
+    redirect_to links_path
   end
 
   private
