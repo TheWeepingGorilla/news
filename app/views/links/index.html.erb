@@ -1,0 +1,12 @@
+<h1>Links</h1>
+
+<ul>
+  <% @links.each do |link| %>
+    <% @link.comments.each do |comment| %>
+      <li><%= "#{comment.comment}" %></li>
+    <% end %>
+    <li><% link_to "Add Comment", new_comment_path, :class=> "btn btn-default btn-sm" %></li>
+  <% end %>
+</ul>
+
+<%= link_to "New Link", new_link_path, :class=> "btn btn-success" %>
