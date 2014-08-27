@@ -41,4 +41,9 @@ class CommentsController < ApplicationController
     flash[:notice] = "Comment deleted."
     redirect_to comments_path
   end
+
+  private
+  def comment_params
+    params.require(:comment).permit(:comment)
+  end
 end
