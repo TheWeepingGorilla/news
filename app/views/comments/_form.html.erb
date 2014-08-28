@@ -1,6 +1,9 @@
 <%= form_for(@comment) do |f| %>
   <div class="form-group">
-    <%= f.hidden_field :commentable_id, :value => @link.id %>
+    <%= f.hidden_field :referring_link_id, :value => @referring_link_id %>
+    <%= f.hidden_field :referring_comment_id, :value => @referring_comment_id %>
+    <%= f.hidden_field :commentable_id, :value => @commentable_id %>
+    <%= f.hidden_field :commentable_type, :value => @commentable_type %>
     <%= f.label :comment %>
     <%= f.text_field :comment %>
   </div>

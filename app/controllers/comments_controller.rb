@@ -5,14 +5,26 @@ class CommentsController < ApplicationController
 
   def new
     @comment = Comment.new
-    @link = Link.find(params[:link_id])
+    @referring_link_id = params[:referring_link_id]
+    @referring_comment_id = params[:referring_comment_id]
+    if @referring_link_id != nil
+      @commentable_id = @referring_link_id
+      @commentable_type = "Link"
+    end
+    if @referring_comment_id != nil
+      @commentable_id = @referring_comment_id
+      @commentable_type = "Comment"
+    end
   end
 
   def create
+
     @comment = Comment.new(comment_params)
-    link = Link.find(params[:comment][:commentable_id])
+    link = Link.find(params[:referring_link_id]) if params[:referring_link_id] != nil
+    referring_comment = Comment.find(params[:referring_comment_id]) if params[:referring_comment_id] != nil
     if @comment.save
-      link.comments << @comment
+      link.comments << @comment if params[:referring_link_id]
+      @comment.comments << referring_comment if params[:referring_comment_id]
       flash[:notice] = "Comment created."
       redirect_to links_path
     else
@@ -47,6 +59,7 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.require(:comment).permit(:comment, :commentable_id, :commentable_type, :link_id)
+    params.require(:comment).permit(:comment, :commentable_id,
+                                    :commentable_type)
   end
 end
