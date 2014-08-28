@@ -1,0 +1,17 @@
+<ul>
+    <% comments_to_display.each do |comment| %>
+      <li><%= "#{comment[:comment]}" %>
+        <%= link_to "Add Comment", new_comment_path(:referring_comment_id => comment.id) %>
+        <%= link_to "Edit",edit_comment_path(comment) %>
+        <%= link_to "Delete", comment_path(comment), :data => {:confirm => "You sure?", :method => "delete"} %>
+      </li>
+      <% if comment.comments != nil %>
+        <%= render partial: "comment", locals: { comments_to_display: comment.comments } %>
+      <% end %>
+    <% end %>
+</ul>
+
+
+
+
+
